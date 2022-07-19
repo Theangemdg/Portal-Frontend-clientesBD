@@ -107,7 +107,7 @@ body {
 .position-img {
     position: absolute;
     left: 10px;
-    bottom: 163px;
+    bottom: 100px;
 }
 
 .contenedor-1 {
@@ -135,11 +135,11 @@ body {
 }
 
 .img-page-1 {
-    width: 300px;
+    width: 320px;
 }
 
 .img-page-2 {
-    width: 325px;
+    width: 280px;
 }
 
 #fondo-page {

@@ -3,7 +3,7 @@ body {
 }
 
 .navbarcolor {
-    background-color: rgba(68, 186, 230, 1) !important;
+    background-color: #f4053a !important;
     color: white;
     height: 70px;
 }
@@ -16,7 +16,7 @@ body {
     color: white;
     text-decoration: none;
     font-size: 33px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
 }
 
 #orden {
@@ -27,7 +27,7 @@ body {
     border-radius: 30px;
     box-shadow: 0px 0px 24px #787776 !important;
     border: none;
-    color: #E5761B;
+    color: #4c4175;
     font-weight: bold;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -52,7 +52,7 @@ body {
 #btn-orden {
     width: 100%;
     border-radius: 30px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
     font-size: 15px;
     font-weight: bold;
@@ -60,7 +60,7 @@ body {
 }
 
 #contenedor-detalle {
-    color: #E5761B;
+    color: #4c4175;
     padding: 25px
 }
 

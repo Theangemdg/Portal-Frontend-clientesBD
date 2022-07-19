@@ -101,7 +101,7 @@ function agregarUsuario() {
             icon: 'error',
             title: 'Oops...',
             text: 'Debes rellenar todos los campos!',
-            confirmButtonColor: '#44bae6',
+            confirmButtonColor: '#4c4175',
         })
 
     }
@@ -135,7 +135,7 @@ function ingresar() {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Credenciales erroneas!',
-                confirmButtonColor: '#44bae6',
+                confirmButtonColor: '#4c4175',
             })
         }
     }).catch(err=>{
@@ -174,7 +174,7 @@ function iniciarUsuarioRegistrado() {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Credenciales erroneas!',
-                confirmButtonColor: '#44bae6',
+                confirmButtonColor: '#4c4175',
             })
         }
     }).catch(err=>{

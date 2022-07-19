@@ -24,7 +24,7 @@ function generarCategorias() {
         for (let i = 0; i < res.data.length; i++) {
             document.getElementById('contenedor-categorias').innerHTML +=
                 `
-            <button type="button" id="Carta-categoria" class="col-3 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="empresasCategoria(${i})"  data-bs-toggle="modal" data-bs-target="#empresasModal">
+            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="empresasCategoria(${i})"  data-bs-toggle="modal" data-bs-target="#empresasModal">
                 <img id="icono-categoria" src="${res.data[i].icono}" class="card-img-top rounded-circle" alt="...">
                 <div class="card-body">
                     <p class="card-text">${res.data[i].nombreCategoria}</p>
@@ -167,7 +167,7 @@ function procesarOrden(nombrePro, descriProd, Precio, imagenP) {
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Introduce la cantidad antes de prcesar la orden',
-                    confirmButtonColor: '#44bae6',
+                    confirmButtonColor: '#4c4175',
                 })
                 break
             } else {

@@ -13,7 +13,7 @@ body {
 }
 
 #bg-navbarcolor {
-    background-color: rgba(68, 186, 230, 1) !important;
+    background-color: #f4053a !important;
 }
 
 #color-bar {
@@ -27,6 +27,29 @@ body {
 #barras {
     width: 75px;
 }
+
+#pie-landing {
+    height: 52px;
+
+    width: 100%;
+    bottom: 0;
+    color: white;
+}
+#content-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    align-content: stretch;
+
+}
+.size-icon {
+    font-size: 25px;
+    padding: 7px;
+    color: white;
+}
+
 
 .container .btn-menu label {
     color: #fff;
@@ -67,7 +90,7 @@ body {
 .cont-menu {
     width: 100%;
     max-width: 70%;
-    background: rgba(68, 186, 230, 1);
+    background: #f4053a;
     height: 100vh;
     position: relative;
     transition: all 500ms ease;
@@ -96,8 +119,8 @@ body {
 }
 
 .cont-menu nav a:hover {
-    border-left: 5px solid rgb(187, 95, 12, 1);
-    background: rgba(68, 186, 230, 1);
+    border-left: 5px solid #413863;
+    background: #f4053a;
 }
 
 .cont-menu label {
@@ -145,7 +168,7 @@ body {
 
 /*Estilos de titulos*/
 #titulos {
-    color: #E5761B;
+    color: #4c4175;
     text-align: center;
     margin: 20px;
 
@@ -170,52 +193,11 @@ body {
     
 }
 
-.busqueda-input {
-    background-color: rgba(68, 186, 230, 0.6);
-    height: 40px;
-    color: rgba(229, 118, 27, 1);
-    width: 100%;
-    text-align: center;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    
-}
-
-
-
-::placeholder{
-    color: rgba(229, 118, 27, 1);
-}
-
-#contenedor-input {
-    margin-bottom: 30px;
-    display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	align-content: stretch;
-
-}
-
-#lupa {
-    display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	align-content: stretch;
-    background-color: rgba(68, 186, 230, 0.6);
-    width: 50px;
-    height: 40px;
-    border-bottom-right-radius: 50rem;
-    border-top-right-radius: 50rem;
-    border-width: 2px !important;
-}
 
 
 #titulo-cate {
-    background-color: rgba(68, 186, 230, 0.6);
+    background-color: #ee2752;
+    color: #fff;
 
 }
 
@@ -226,7 +208,7 @@ body {
 }
 
 #Carta-categoria:hover {
-    background-color:rgba(68, 186, 230, 1);
+    background-color:#f4053a;
     cursor: pointer;
 }
 
@@ -238,7 +220,7 @@ body {
 	justify-content: space-around;
 	align-items: center;
 	align-content: space-between;
-    background-color: rgba(68, 187, 230, 0.815);
+    background-color: #f4053a;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     border-bottom-left-radius: 40px;
@@ -265,7 +247,7 @@ body {
 
 @media (max-width: 400px) {
     #icono-categoria {
-        width: 98% !important;
+        width: 58% !important;
         margin-top: 18px;
     }
 }
@@ -282,20 +264,7 @@ body {
     }
 }
 
-/*Estilos para la seccion Mas populares*/
-#contenedor-populares {
-    color: #E5761B;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: space-evenly;
-	align-items: stretch;
-	align-content: stretch;
-    margin-left: 15px;
-    margin-right: 15px;
-    
 
-}
 
 #icono-producto {
     width: 70px !important;;
@@ -308,7 +277,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	align-content: stretch;
-    box-shadow: 0px 0px 10px #E5761B !important;
+    box-shadow: 0px 0px 10px #4c4175 !important;
     border-radius: 13px;
 }
 
@@ -337,7 +306,7 @@ body {
 }
 
 .header-empresas{
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: #fff;
     font-size: 30px;
     font-weight: bold;
@@ -349,20 +318,20 @@ body {
 }
 
 #btn-closeEmpresa {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: #fff;
 }
 
 #empresa {
     margin: 15px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     border-radius: 30px;
     padding: 15px;
 }
 
 #body-empresa {
     font-family: 'Source Code Pro', monospace;
-    color: #E5761B;
+    color: #4c4175;
     display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -424,20 +393,20 @@ body {
 }
 
 #btn-cerrarProductos {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: #fff;
     font-size: 28px;
 }
 
 #modalProductoHeader {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: #fff;
     font-size: 28px;
 }
 
 #contendor-producto {
     padding: 13px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     border-radius: 30px;
 }
 
@@ -452,8 +421,8 @@ body {
     border-radius: 30px;
     padding: 15px;
     margin-bottom: 15px;
-    color: rgba(229, 118, 27, 1);
-    box-shadow: 0px 0px 30px #7a7a7a !important;
+    color: #4c4175;
+    box-shadow: 0px 0px 30px #c54444  !important;
 }
 
 .img-producto {
@@ -463,12 +432,12 @@ body {
 }
 
 #btn-pedir {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
     height: 30px;
     width: 74px;
     font-weight: bold;
-    border-color: rgba(68, 186, 230, 0.6);
+    border-color: #c40a32;
 }
 
 #pedir-productos {
@@ -490,19 +459,19 @@ body {
 }
 
 #footer-productos {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     height: 80px;
 }
 
 #btn-prod-menu {
-    background-color: #E5761B;
+    background-color: #4c4175;
     color: #fff;
 }
 
 /*ESTILOS DEL FORMULARIO PARA PEDIR*/
 #contenedor-orden1 {
     padding: 15px;
-    background-color:rgba(229, 118, 27, 0.87);
+    background-color:#4c4175ce;
     border-radius: 30px;
     position: absolute;
     top: 100px;
@@ -524,7 +493,7 @@ body {
 
 #contenedor-orden2 div {
     margin-bottom: 15px;
-    color: #E5761B;
+    color: #4c4175;
 }
 
 .flex-orden {
@@ -537,7 +506,7 @@ body {
 }
 
 #btn-cerrarOrden {
-    background-color:#E5761B;
+    background-color:#4c4175;
     color: #fff;
     font-weight: bold;
     height: 35px;
@@ -545,7 +514,7 @@ body {
 }
 
 #btn-procesarOrden {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: #fff;
     font-weight: bold;
     height: 35px;
@@ -555,9 +524,9 @@ body {
 #input-orden {
     width: 20%;
     margin-left: 13px;
-    border-color: #E5761B;
+    border-color: #4c4175;
     text-align: center;
-    color: #E5761B;
+    color: #4c4175;
 }
 
 #titulo-orden {

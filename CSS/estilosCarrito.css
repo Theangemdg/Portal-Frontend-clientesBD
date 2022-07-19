@@ -13,7 +13,7 @@
 
 #contedor-ordenes {
     padding: 17px;
-    color: #E5761B;
+    color: #4c4175;
 }
 
 #contenido-producto {
@@ -90,7 +90,7 @@
 #btn-procesar {
     width: 100%;
     border-radius: 30px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
     font-size: 20px;
     font-weight: bold;
@@ -100,13 +100,13 @@
 
 /*ESTILOS PARA LA CONFIRMACION DE ELIMINAR ORDEN*/
 #headerEliminar {
-    background-color: rgba(68, 186, 230, 1);
-    color: #E5761B;
+    background-color: #f4053a;
+    color: #4c4175;
     font-weight: bold;
 }
 
 #bodyEliminar {
-    color: #E5761B;
+    color: #4c4175;
     font-size: 17px;
     text-align: center;
     font-weight: bold;
@@ -118,7 +118,7 @@
 }
 
 #btn-Eliminar {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
 }
 
 
@@ -134,7 +134,7 @@
 }
 
 #headerUbi{
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
 }
 
@@ -144,7 +144,7 @@
 
 
 #contendor-ubicacion {
-    color: #E5761B;
+    color: #4c4175;
     font-weight: bold;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -171,7 +171,7 @@
 #btn-Ubicacion {
     width: 100%;
     border-radius: 30px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     height: 45px;
     color: white;
     font-weight: 900;
@@ -182,8 +182,8 @@
 #btn-regresarUbi {
     font-size: 35px;
     border: 0;
-    background-color:rgba(68, 186, 230, 1);
-    color: white;
+    background-color:#f4053a;
+    color: #c00b32;
 }
 
 #contenedor-targeta {
@@ -193,7 +193,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	align-content: stretch;
-    color: #E5761B;
+    color: #4c4175;
     font-weight: bold;
 }
 
@@ -206,8 +206,8 @@
 }
 .estilo-targeta input {
     width: 100%;
-    border-color: coral;
-    color: #E5761B;
+    border-color: #c00b32;
+    color: #4c4175;
     border-radius: 30px;
     text-align: center;
 }
@@ -231,16 +231,16 @@
 .estilo-targeta2 input {
     width: 66px;
     border-radius: 30px;
-    color: #E5761B;
+    color: #4c4175;
     margin-left: 16px;
     text-align: center;
-    border-color: coral;
+    border-color: #c00b32;
 }
 
 #btn-finalizarCompra {
     width: 100%;
     border-radius: 30px;
-    background-color:rgba(68, 186, 230, 1);
+    background-color:#f4053a;
     margin-top: 26px;
     color: white;
     height: 40px;
@@ -255,9 +255,9 @@
     -webkit-appearance: none !important;
     width: 80px;
     border-radius: 11px;
-    border-color: #E5761B;
+    border-color: #4c4175;
     text-align: center;
-    color: orange;
+    color: #c00b32;
 }
 
 .grupo-select i {

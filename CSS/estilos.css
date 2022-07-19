@@ -13,7 +13,7 @@ body {
 }
 
 #bg-navbarcolor {
-    background-color: #44bae6 !important;
+    background-color: #f4053a !important;
 }
 
 #color-bar {
@@ -55,7 +55,7 @@ body {
 .cont-menu {
     width: 100%;
     max-width: 250px;
-    background: rgba(229, 118, 27, 1);
+    background: #4c4175;
     height: 100vh;
     position: relative;
     transition: all 500ms ease;
@@ -84,8 +84,8 @@ body {
 }
 
 .cont-menu nav a:hover {
-    border-left: 5px solid #44bae6;
-    background: rgb(187, 95, 12, 1);
+    border-left: 5px solid #f4053a;
+    background: #3e355f;
 }
 
 .cont-menu label {
@@ -148,7 +148,7 @@ body {
 
 #btn-registro {
     width: 286px;
-    background-color: rgba(229, 118, 27, 1);
+    background-color: #4c4175;
     color: white;
     height: 57px;
     margin-bottom: 27px;
@@ -158,7 +158,7 @@ body {
 
 #btn-iniciar-sesion {
     width: 286px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
     height: 57px;
     margin-bottom: 27px;
@@ -167,11 +167,11 @@ body {
 }
 
 #btn-iniciar-sesion:hover {
-    background-color: #31A0C9;
+    background-color: #c20a32;
 }
 
 #btn-registro:hover {
-    background-color: rgba(208, 110, 20, 1);
+    background-color: #3e355f;
 }
 
 header {
@@ -211,7 +211,7 @@ header {
 }
 
 #moodalHL {
-    background-color: rgba(229, 118, 27, 1);
+    background-color: #4c4175;
     height: 20%;
     border-bottom-left-radius: 40%;
     border-bottom-right-radius: 40%;
@@ -224,7 +224,7 @@ header {
 }
 
 #btn-close {
-    background-color: rgba(229, 118, 27, 1);
+    background-color: #4c4175;
     color: white;
     font-size: 220%;
     margin-top: 8%;
@@ -243,7 +243,7 @@ header {
 }
 
 #moodalFl {
-    background-color: rgba(229, 118, 27, 1);
+    background-color: #4c4175;
     height: 15%;
     border-top-left-radius: 45%;
     border-top-right-radius: 45%;
@@ -261,7 +261,7 @@ header {
 
 .cajainfo {
     width: 286px;
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
     height: 70px;
     display: flex;
@@ -290,7 +290,7 @@ header {
 }
 
 #moodalHR {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     height: 20%;
     border-bottom-left-radius: 40%;
     border-bottom-right-radius: 40%;
@@ -303,7 +303,7 @@ header {
 }
 
 #btn-close-R {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     color: white;
     font-size: 220%;
     margin-top: 8%;
@@ -322,7 +322,7 @@ header {
 }
 
 #moodalFR {
-    background-color: rgba(68, 186, 230, 1);
+    background-color: #f4053a;
     height: 15%;
     border-top-left-radius: 45%;
     border-top-right-radius: 45%;
@@ -330,7 +330,7 @@ header {
 
 .cajainfo-R {
     width: 286px;
-    background-color: rgba(229, 118, 27, 1);
+    background-color: #4c4175;
     color: white;
     height: 70px;
     display: flex;

@@ -16,15 +16,16 @@ obtenerCliente();
 function generarCategorias() {
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/categorias.php',
+        url: 'http://localhost/Backend-portalBD/api/categorias.php',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
+        console.log(res.data)
         document.getElementById('contenedor-categorias').innerHTML = ""
         for (let i = 0; i < res.data.length; i++) {
             document.getElementById('contenedor-categorias').innerHTML +=
                 `
-            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="empresasCategoria(${i})"  data-bs-toggle="modal" data-bs-target="#empresasModal">
+            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="productosCategoria(${i})"  data-bs-toggle="modal" data-bs-target="#productosModal">
                 <img id="icono-categoria" src="${res.data[i].icono}" class="card-img-top rounded-circle" alt="...">
                 <div class="card-body">
                     <p class="card-text">${res.data[i].nombreCategoria}</p>
@@ -39,82 +40,47 @@ function generarCategorias() {
 }
 generarCategorias();
 
-function empresasCategoria(codigocategoria) {
-    document.getElementById('contenedor-empresas').innerHTML = "";
-    document.getElementById('empresasModalLabel').innerHTML = "PORTAL"
+function productosCategoria(codigocategoria) {
+    document.getElementById('contenedor-productos').innerHTML = "";
+    document.getElementById('productosModalLabel').innerHTML = "PORTAL"
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/categorias.php?id=' + codigocategoria,
+        url: 'http://localhost/Backend-portalBD/api/categorias.php?id=' + codigocategoria,
         method: 'get',
         responseType: 'json'
     }).then((res) => {
-        document.getElementById('empresasModalLabel').innerHTML = `${res.data.nombreCategoria}`
-        for (let i = 0; i < res.data.empresas.length; i++) {
-            document.getElementById('contenedor-empresas').innerHTML +=
+        document.getElementById('productosModalLabel').innerHTML = `${res.data.nombreCategoria}`
+        for (let i = 0; i < res.data.productos.length; i++) {
+            document.getElementById('contenedor-productos').innerHTML +=
                 `
-        <div id="empresa">
-            <button id="btn-productos" data-bs-toggle="modal" data-bs-target="#modalproductos" onclick="listaProductos(${codigocategoria},${i})">
-                <img id="banner-empresa" src="${res.data.empresas[i].imagen}"alt="...">
-                <div id="body-empresa" class="card-body">
-                    <img id="logo-empresa" src="${res.data.empresas[i].logo}" class="rounded-circle " alt="...">
-                    <div>
-                        <h2>${res.data.empresas[i].nombreEmpresa}</h2>
-                        <p>${res.data.empresas[i].descripcion}</p>
+                <div id="producto">
+                    <div id="btn-productos">
+                        <img id="banner-producto" src="${res.data.productos[i].imgProducto}"alt="...">
+                        <div id="body-producto" class="card-body">
+                            <img id="logo-producto" src="${res.data.productos[i].imgProducto}" class="rounded-circle " alt="...">
+                            <div>
+                                <h2>${res.data.productos[i].nombreProducto}</h2>
+                                <p>${res.data.productos[i].descripcion}</p>
+                                <p>$${res.data.productos[i].precio}</p>
+                                <button id="btn-pedir" class="rounded-pill" onclick="abrirformularioPedir(${codigocategoria},${i});">Pedir</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </button>
-        </div>
-        `
-
+                `
         }
-    }).catch(err => {
-        console.log(err);
-    })
-
-
-}
-
-function listaProductos(codigocategoria, empresa) {
-    document.getElementById('contendor-producto').innerHTML = "";
-    document.getElementById('modalproductosLabel').innerHTML = "PORTAL"
-
-    axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/productos.php?id=' + codigocategoria + "&idE=" + empresa,
-        method: 'get',
-        responseType: 'json'
-    }).then((res) => {
-        document.getElementById('modalproductosLabel').innerHTML = `${res.data.nombreEmpresa}`
-
-        for (let i = 0; i < res.data.productos.length; i++) {
-            document.getElementById('contendor-producto').innerHTML +=
-                `<div id="producto">
-            <div>
-                <img class="img-producto rounded-circle" src="${res.data.productos[i].imgProducto}" alt="img">
-            </div>
-            <div id="info-producto">
-                <h2>${res.data.productos[i].nombreProducto}</h2>
-                <p>${res.data.productos[i].descripcion}</p>
-            </div>
-            <div id="pedir-productos">
-                <p>$${res.data.productos[i].precio}</p>
-                <button id="btn-pedir" class="rounded-pill" onclick="abrirformularioPedir(${codigocategoria},${empresa},${i});">Pedir</button>
-            </div>
-        </div>
-
-        `
-        }
-
     }).catch(err => {
         console.log(err);
     })
 
 }
 
-function abrirformularioPedir(categoria, empresa, producto) {
+
+function abrirformularioPedir(categoria, producto) {
     document.getElementById('contenedor-orden1').classList.toggle('abrir-categorias');
     document.getElementById('contenedor-orden1').innerHTML = "";
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/productos.php?id=' + categoria + "&idE=" + empresa + "&idP=" + producto,
+        url: 'http://localhost/Backend-portalBD/api/productos.php?id=' + categoria + "&idP=" + producto,
         method: 'get',
         responseType: 'json'
     }).then((res) => {
@@ -156,7 +122,7 @@ function procesarOrden(nombrePro, descriProd, Precio, imagenP) {
     console.log(cantidad);
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
@@ -182,7 +148,7 @@ function procesarOrden(nombrePro, descriProd, Precio, imagenP) {
                     
                     axios({
                         method: 'POST',
-                        url: "http://localhost/Backend-Portal-Delivery/api/ordenes.php?id="+i,
+                        url: "http://localhost/Backend-portalBD/api/ordenes.php?id="+i,
                         responseType: 'json',
                         data: orden
                     }).then(res=>{

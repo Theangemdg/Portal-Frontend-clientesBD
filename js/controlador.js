@@ -1,3 +1,4 @@
+//FUNCIONES PARA EVALUAR LOS FORMULARIOS
 const formulario = document.getElementById('modalBodyR');
 const inputs = document.querySelectorAll('#modalBodyR input');
 
@@ -49,9 +50,9 @@ inputs.forEach((input) => {
     input.addEventListener('keyup', validarFormulario);
     input.addEventListener('blur', validarFormulario);
 })
+//FIN EVALUAR FORMULARIO
 
-
-
+//AGREGAR USUARIOS
 function agregarUsuario() {
     let txtNombre = document.getElementById('txt-nombre').value;
     let txtCorreo = document.getElementById('txt-correo').value;
@@ -77,8 +78,7 @@ function agregarUsuario() {
             nombre: txtNombre,
             correo: txtCorreo,
             contraseña: txtContraseña,
-            latitud: "",
-            longitud: "",
+            direccion: "no definido",
             ordenes: [],
             pedidos: [],
             metodoPago: []
@@ -86,7 +86,7 @@ function agregarUsuario() {
         
         axios({
             method: 'POST',
-            url: "http://localhost/Backend-Portal-Delivery/api/usuarios.php",
+            url: "http://localhost/Backend-portalBD/api/usuarios.php",
             responseType: 'json',
             data: usuario
         }).then(res=>{
@@ -107,6 +107,7 @@ function agregarUsuario() {
     }
 }
 
+//FUNCION PARA INGRESAR AL MENU PRINCIPAL
 function ingresar() {
     var ucorreo = '';
     var contraseña = '';
@@ -116,13 +117,13 @@ function ingresar() {
     contraseña = document.getElementById('txt-contraS').value;
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) =>{
         console.log(res.data.length);
         for (let i = 0; i<res.data.length; i++) {
-            if (res.data[i].correo==ucorreo && res.data[i].contraseña==contraseña ) {
+            if (res.data[i].correo==ucorreo && res.data[i].contrasena==contraseña ) {
                 bAcceso = true;
                 sessionStorage.setItem('Usuario activo', JSON.stringify(res.data[i]));
                 break;
@@ -155,13 +156,13 @@ function iniciarUsuarioRegistrado() {
     contraseña = document.getElementById('txt-contraseña').value;
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) =>{
         console.log(res.data.length);
         for (let i = 0; i<res.data.length; i++) {
-            if (res.data[i].correo==ucorreo && res.data[i].contraseña==contraseña ) {
+            if (res.data[i].correo==ucorreo && res.data[i].contrasena==contraseña ) {
                 bAcceso = true;
                 sessionStorage.setItem('Usuario activo', JSON.stringify(res.data[i]));
                 break;
@@ -185,4 +186,4 @@ function iniciarUsuarioRegistrado() {
     
 }
 
-
+//FIN INICIAR SESION O REGISTRO

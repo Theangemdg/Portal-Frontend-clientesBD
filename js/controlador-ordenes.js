@@ -2,7 +2,7 @@ var clienteActivo = JSON.parse(sessionStorage.getItem('Usuario activo'));
 
 function obtenerPedidos(){
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
@@ -11,7 +11,7 @@ function obtenerPedidos(){
                 let idUsuario = i;
                 axios({
                     method: 'get',
-                    url: "http://localhost/Backend-Portal-Delivery/api/pedidos.php?id=" + idUsuario,
+                    url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + idUsuario,
                     responseType: 'json'
                 }).then(res => {
                     console.log(res.data);
@@ -75,7 +75,7 @@ function obtenerDetalle(id, idPedido){
     }
     })
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php?',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php?',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
@@ -83,7 +83,7 @@ function obtenerDetalle(id, idPedido){
             if (res.data[i].nombre == clienteActivo.nombre) {
                 axios({
                     method: 'get',
-                    url: "http://localhost/Backend-Portal-Delivery/api/pedidos.php?id=" + id+'&idP='+idPedido,
+                    url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + id+'&idP='+idPedido,
                     responseType: 'json'
                 }).then(res => {
                     console.log(res.data);

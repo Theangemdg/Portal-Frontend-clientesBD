@@ -12,7 +12,7 @@ function listaOrdenes() {
     let ISV = 0.15;
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
@@ -20,10 +20,11 @@ function listaOrdenes() {
             if (res.data[i].nombre == clienteActivo.nombre) {
                 axios({
                     method: 'get',
-                    url: "http://localhost/Backend-Portal-Delivery/api/ordenes.php?id=" + i,
+                    url: "http://localhost/Backend-portalBD/api/ordenes.php?id=" + i,
                     responseType: 'json'
                 }).then(res => {
                     console.log(res.data);
+                    
                     for (let i = 0; i < res.data.length; i++) {
 
                         document.getElementById('contedor-ordenes').innerHTML +=
@@ -48,6 +49,7 @@ function listaOrdenes() {
                     }
 
                     let total = ISV * subtotal + subtotal;
+                    //AQUI PONER EL IF PARA VER SI ES POR ENVIO A DOMICILIO O PARA COMER EN EL RESTAURANTE
 
 
                     document.getElementById('contedor-ordenes').innerHTML +=
@@ -65,9 +67,13 @@ function listaOrdenes() {
                             <h2>TOTAL</h2>
                             <p>$${total.toFixed(2)}</p>
                         </div>
-                        <button id="btn-procesar" type="button" data-bs-toggle="modal" data-bs-target="#modalocalizacion">Procesar Orden</button>
+                        <button id="btn-procesar" type="button" data-bs-toggle="modal" data-bs-target="#modalTargeta">Procesar Orden</button>
                     </div>
                     `
+                    if(res.data.length !== 0){
+                        document.getElementById('btn-procesar').classList.add('aparece-btnProcesar');
+                    }
+
                 }).catch(err => {
                     console.log(err);
                 })
@@ -83,14 +89,14 @@ function eliminarOrden(product) {
 
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
         for(let i=0; i<res.data.length; i++){
             if (res.data[i].nombre == clienteActivo.nombre){
                 axios({
-                    url: 'http://localhost/Backend-Portal-Delivery/api/ordenes.php?id='+i+'&idO='+product,
+                    url: 'http://localhost/Backend-portalBD/api/ordenes.php?id='+i+'&idO='+product,
                     method: 'delete',
                     responseType: 'json'
                 }).then((res) => {
@@ -117,7 +123,7 @@ function crearOrden() {
     let txtcvv = document.getElementById('inputCVV').value
 
     axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
+        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
         method: 'get',
         responseType: 'json'
     }).then((res) => {
@@ -156,9 +162,9 @@ function crearOrden() {
                     console.log(pedido);
     
     
-                    //solicitud para argear el pedido del usuario
+                    //solicitud para agregar el pedido del usuario
                     axios({
-                        url: 'http://localhost/Backend-Portal-Delivery/api/pedidos.php?id='+i,
+                        url: 'http://localhost/Backend-portalBD/api/pedidos.php?id='+i,
                         method: 'post',
                         responseType: 'json',
                         data: pedido
@@ -170,7 +176,7 @@ function crearOrden() {
     
                     //aqui se hace la solicirud para limpiar las ordenes del carrito cuando se complete la compra
                     axios({
-                        url: 'http://localhost/Backend-Portal-Delivery/api/ordenes.php?id='+i,
+                        url: 'http://localhost/Backend-portalBD/api/ordenes.php?id='+i,
                         method: 'delete',
                         responseType: 'json',
                     }).then((res) => {
@@ -201,89 +207,10 @@ function crearOrden() {
 
 }
 
+//HERRAMIENTAS PARA LA LOCALIZACION
 
-let map;
-let marker;
-let whacthID;
-let geoLoc;
 
-function initMap() {
-    var location = { lat: 14.0709873, lng: -87.221397 };
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: location
-    });
-    marker = new google.maps.Marker({
-        position: location,
-        map,
-    });
-    getPosition();
-}
-
-function getPosition() {
-    if (navigator.geolocation) {
-        var options = { timeout: 60000 };
-        geoLoc = navigator.geolocation;
-        whacthID = geoLoc.watchPosition(showLocationOnMap, errorHandler, options);
-
-    } else {
-        alert("Lo sentimos, el navegador no soporta geolocalizacion")
-    }
-}
-
-function showLocationOnMap(position) {
-    var latitud = position.coords.latitude;
-    var longitud = position.coords.longitude
-
-    console.log("Latitud: " + latitud + "longitud: " + longitud);
-
-    const location = { lat: latitud, lng: longitud };
-    marker.setPosition(location);
-    map.setCenter(location);
-
-    document.getElementById('contendor-ubicacion').innerHTML = "";
-    document.getElementById('contendor-ubicacion').innerHTML +=
-        `
-    <div class="latitud-longitud">
-        <p>Latitud</p>
-        <p>${latitud}</p>
-    </div>
-    <div class="latitud-longitud">
-        <p>Longitud</p>
-        <p>${longitud}</p>
-    </div>
-    `
-    document.getElementById('footer-ubi').innerHTML = "";
-    document.getElementById('footer-ubi').innerHTML +=
-        `
-    <button id="btn-Ubicacion" data-bs-toggle="modal" data-bs-target="#modalTargeta">Fijar Ubicación</button>
-    `
-
-    axios({
-        url: 'http://localhost/Backend-Portal-Delivery/api/usuarios.php',
-        method: 'get',
-        responseType: 'json'
-    }).then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-            if (res.data[i].nombre == clienteActivo.nombre) {
-                res.data[i].latitud = latitud;
-                res.data[i].longitud = longitud;
-                sessionStorage.setItem('Usuario activo', JSON.stringify(res.data[i]));
-            }
-    
-        }
-    }).catch(err => {
-        console.log(err);
-    })
-}
-
-function errorHandler(err) {
-    if (err.code == 1) {
-        alert("Error: acceso denegado")
-    } else if (err.code == 2) {
-        alert("Error: posicion no existe o no se encuentra!")
-    }
-}
+//FIN HERRAMIENTAS DE LOCALIZACION
 
 //*Select para llenar el mes
 for (let i = 1; i <= 12; i++) {

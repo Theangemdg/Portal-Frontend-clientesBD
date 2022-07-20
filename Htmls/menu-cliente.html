@@ -19,7 +19,7 @@
             <div class="btn-menu">
                 <label for="btn-menu">☰</label>
             </div>
-            <img id="logo" src="../img/Portal_logo.png" alt="">
+            <img id="logo" src="../img/Portal_logo2.png" alt="">
             <img id="profile-photo" src="../img/default-profile.jpg" class="rounded-circle" alt="">
         </div>
     </header>
@@ -27,7 +27,7 @@
     <div class="container-menu">
         <div id="cont-menu" class="cont-menu">
             <nav id="menu-lateral">
-                <img id="logo" style="margin-left: 30px;" src="../img/Portal_logo.png" alt="">
+                <img id="logo" style="margin-left: 30px;" src="../img/Portal_logo2.png" alt="">
                 <div class="container contenedor-1">
                     <div style="margin-top: 40px;">
                         <a id="inicarss" href="#">Iniciar Sesion</a>
@@ -72,21 +72,24 @@
     </footer>   
     
 
-    <!--Modal Empresas-->
-    <div class="modal fade" id="empresasModal" tabindex="-1" aria-labelledby="empresasModalLabel" aria-hidden="true">
+    <!--Modal productos-->
+    <div class="modal fade" id="productosModal" tabindex="-1" aria-labelledby="productosModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-fullscreen">
             <div class="modal-content">
-                <div class="modal-header header-empresas">
-                    <button id="btn-closeEmpresa" type="button" class="border-0 fa-solid fa-arrow-left-long"
-                        data-bs-toggle="modal" data-bs-target="#empresasModal"></button>
-                    <h5 class="modal-title" id="empresasModalLabel">Modal title</h5>
+                <div class="modal-header header-productos">
+                    <button id="btn-closeproducto" type="button" class="border-0 fa-solid fa-arrow-left-long"
+                        data-bs-toggle="modal" data-bs-target="#productosModal"></button>
+                    <h5 class="modal-title" id="productosModalLabel">Modal title</h5>
                     <div></div>
                     <!--modaldetalle-->
 
 
                 </div>
-                <div id="contenedor-empresas" class="modal-body p-0">
+                <div id="contenedor-productos" class="modal-body p-0">
 
+                </div>
+                <div id="contenedor-orden1">
+                        
                 </div>
                 <div class="modal-footer" style="background-color: #f4053a; height: 67px">
 
@@ -95,34 +98,6 @@
         </div>
     </div>
 
-
-    <!--Modal Empresas-->
-    <!-- Modal -->
-    <div class="modal fade" id="modalproductos" tabindex="-1" aria-labelledby="modalproductosLabel" aria-hidden="true">
-        <div id="modal-dialog" class="modal-dialog">
-            <div class="modal-content">
-                <div id="modalProductoHeader" class="modal-header">
-                    <button id="btn-cerrarProductos" type="button" class="border-0 fa-solid fa-arrow-left-long"
-                        data-bs-toggle="modal" data-bs-target="#empresasModal"></button>
-                    <h5 class="modal-title" id="modalproductosLabel">Pizzas</h5>
-                    <div></div>
-                </div>
-                <div class="modal-body">
-                    <div id="contendor-producto">
-
-                    </div>
-                    <!--Formulario Pedir-->
-                    <div id="contenedor-orden1">
-                        
-                    </div>
-                </div>
-                <div id="footer-productos" class="modal-footer">
-                    <button id="btn-prod-menu" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar
-                        al Menu</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"

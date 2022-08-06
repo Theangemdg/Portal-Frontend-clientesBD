@@ -1,25 +1,29 @@
-var clienteActivo = JSON.parse(sessionStorage.getItem('Usuario activo'));
+var clienteActivo = JSON.parse(sessionStorage.getItem("Usuario activo"));
 
-function obtenerPedidos(){
-    axios({
-        url: 'http://localhost/Backend-portalBD/api/usuarios.php',
-        method: 'get',
-        responseType: 'json'
-    }).then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-            if (res.data[i].nombre == clienteActivo.nombre) {
-                let idUsuario = i;
-                axios({
-                    method: 'get',
-                    url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + idUsuario,
-                    responseType: 'json'
-                }).then(res => {
-                    console.log(res.data);
-                    document.getElementById('grupo-ordenes').innerHTML = "";
-                    for(let i=0; i<res.data.length; i++){
-                        
-                        document.getElementById('grupo-ordenes').innerHTML +=
-                        `<div id="orden" class="col-12 col-sm-6">
+function obtenerPedidos() {
+  axios({
+    url: "http://localhost/Backend-portalBD/api/usuarios.php",
+    method: "get",
+    responseType: "json",
+  })
+    .then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].nombre == clienteActivo.nombre) {
+          let idUsuario = i;
+          axios({
+            method: "get",
+            url:
+              "http://localhost/Backend-portalBD/api/pedidos.php?id=" +
+              idUsuario,
+            responseType: "json",
+          })
+            .then((res) => {
+              console.log(res.data);
+              document.getElementById("grupo-ordenes").innerHTML = "";
+              for (let i = 0; i < res.data.length; i++) {
+                document.getElementById(
+                  "grupo-ordenes"
+                ).innerHTML += `<div id="orden" class="col-12 col-sm-6">
                             <div class="info-orden">
                                 <h2>Pedido numero</h2>
                                 <p>#${res.data[i].numeroPedido}</p>
@@ -35,62 +39,66 @@ function obtenerPedidos(){
                             <button id="btn-orden" data-bs-toggle="modal" data-bs-target="#modalDetalle" onclick="obtenerDetalle('${idUsuario}', '${i}')">Ver Detalle del pedido</button>
                         </div>
                         
-                        `
-
-                    }
-                }).catch(err => {
-                    console.log(err);
-                })
-                break;
-            }
+                        `;
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          break;
         }
-    }).catch(err => {
-        console.log(err);
+      }
     })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 obtenerPedidos();
 
-function obtenerDetalle(id, idPedido){
-    
-    document.getElementById('contenedor-compra').innerHTML = "";
-    document.getElementById('info-detalle').innerHTML = ""; 
-    document.getElementById('contenedor-detalleCompra').innerHTML = "";
-    let timerInterval
-    Swal.fire({
-    title: 'Cargando Pedido!',
+function obtenerDetalle(id, idPedido) {
+  document.getElementById("contenedor-compra").innerHTML = "";
+  document.getElementById("info-detalle").innerHTML = "";
+  document.getElementById("contenedor-detalleCompra").innerHTML = "";
+  let timerInterval;
+  Swal.fire({
+    title: "Cargando Pedido!",
     timer: 2000,
     timerProgressBar: true,
     didOpen: () => {
-        Swal.showLoading()
-        timerInterval = setInterval(() => {
-        }, 100)
+      Swal.showLoading();
+      timerInterval = setInterval(() => {}, 100);
     },
     willClose: () => {
-        clearInterval(timerInterval)
-    }
-    }).then((result) => {
+      clearInterval(timerInterval);
+    },
+  }).then((result) => {
     /* Read more about handling dismissals below */
     if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('I was closed by the timer')
+      console.log("I was closed by the timer");
     }
-    })
-    axios({
-        url: 'http://localhost/Backend-portalBD/api/usuarios.php?',
-        method: 'get',
-        responseType: 'json'
-    }).then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-            if (res.data[i].nombre == clienteActivo.nombre) {
-                axios({
-                    method: 'get',
-                    url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + id+'&idP='+idPedido,
-                    responseType: 'json'
-                }).then(res => {
-                    console.log(res.data);
-                    let productos = "";
-                    for(let j=0; j<res.data.productos.length; j++){
-                        productos += 
-                        `   <p>${res.data.productos[j].nombreProducto}</p>
+  });
+  axios({
+    url: "http://localhost/Backend-portalBD/api/usuarios.php?",
+    method: "get",
+    responseType: "json",
+  })
+    .then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].nombre == clienteActivo.nombre) {
+          axios({
+            method: "get",
+            url:
+              "http://localhost/Backend-portalBD/api/pedidos.php?id=" +
+              id +
+              "&idP=" +
+              idPedido,
+            responseType: "json",
+          })
+            .then((res) => {
+              console.log(res.data);
+              let productos = "";
+              for (let j = 0; j < res.data.productos.length; j++) {
+                productos += `   <p>${res.data.productos[j].nombreProducto}</p>
                             <div class="contenedor-producto">
                                 <div class="info-product">
                                     <p>Cantidad:</p>
@@ -98,10 +106,9 @@ function obtenerDetalle(id, idPedido){
                                 </div>
                                 <p>$${res.data.productos[j].precio}</p>
                             </div>
-                        `
-                    }
-                        document.getElementById('info-detalle').innerHTML =
-                        `<div>
+                        `;
+              }
+              document.getElementById("info-detalle").innerHTML = `<div>
                             <div>
                                 <h2>Pedido #${res.data.numeroPedido}</h2>
                                 <hr>
@@ -127,20 +134,20 @@ function obtenerDetalle(id, idPedido){
                                 <p>${res.data.correo}</p>
                             </div>
                         </div>
-                        `
-                
-                        document.getElementById('contenedor-compra').innerHTML =
-                        `<div>
+                        `;
+
+              document.getElementById("contenedor-compra").innerHTML = `<div>
                             <h1>Tu Compra</h1>
                             <hr>
                         </div>
                         <div>
                             ${productos}
                         </div>
-                        `
-                
-                        document.getElementById('contenedor-detalleCompra').innerHTML =
-                        `<div class="compra">
+                        `;
+
+              document.getElementById(
+                "contenedor-detalleCompra"
+              ).innerHTML = `<div class="compra">
                             <h2>Sub Total</h2>
                             <p>$${res.data.subTotal}</p>
                         </div>
@@ -152,21 +159,16 @@ function obtenerDetalle(id, idPedido){
                             <h2>TOTAL</h2>
                             <p>$${res.data.total.toFixed(2)}</p>
                         </div>
-                        `
-                    
-                    
-                }).catch(err => {
-                    console.log(err);
-                })
-                break;
-            }
+                        `;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          break;
         }
-    }).catch(err => {
-        console.log(err);
+      }
     })
-
-
-    
-
-    
+    .catch((err) => {
+      console.log(err);
+    });
 }

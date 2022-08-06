@@ -1,113 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App-Clientes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="../CSS/estilosClientes.css">
-    <script src="https://kit.fontawesome.com/a58c9592f7.js" crossorigin="anonymous"></script>
-</head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../CSS/estilosClientes.css" />
+    <script
+      src="https://kit.fontawesome.com/a58c9592f7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<body>
+  <body>
     <!--NAV BAR-->
-    <header id="bg-navbarcolor" class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <div class="btn-menu">
-                <label for="btn-menu">☰</label>
-            </div>
-            <img id="logo" src="../img/Portal_logo2.png" alt="">
-            <img id="profile-photo" src="../img/default-profile.jpg" class="rounded-circle" alt="">
+    <header
+      id="bg-navbarcolor"
+      class="navbar navbar-expand-lg navbar-light bg-light"
+    >
+      <div class="container">
+        <div class="btn-menu">
+          <label for="btn-menu">☰</label>
         </div>
+        <img id="logo" src="../img/Portal_logo2.png" alt="" />
+        <img
+          id="profile-photo"
+          src="../img/default-profile.jpg"
+          class="rounded-circle"
+          alt=""
+        />
+      </div>
     </header>
-    <input type="checkbox" id="btn-menu">
+    <input type="checkbox" id="btn-menu" />
     <div class="container-menu">
-        <div id="cont-menu" class="cont-menu">
-            <nav id="menu-lateral">
-                <img id="logo" style="margin-left: 30px;" src="../img/Portal_logo2.png" alt="">
-                <div class="container contenedor-1">
-                    <div style="margin-top: 40px;">
-                        <a id="inicarss" href="#">Iniciar Sesion</a>
-                    </div>
-                </div>
-                <div class="container contenedor-2">
-                    <label id="btn-home" for="btn-menu"><i class="fa-solid fa-house-user"></i> Home</label>
-                    <a href="../Htmls/carrito.html"><i class="fa-solid fa-cart-shopping"></i> Carrito</a>
-                    <div onclick="regresarAlandingPage();">
-                        <a href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
-                    </div>
-                    <a href="../Htmls/estadoOrden.html"><i class="fa-solid fa-street-view"></i> Estado de tus ordenes</a>
-                </div>
-            </nav>
-        </div>
+      <div id="cont-menu" class="cont-menu">
+        <nav id="menu-lateral">
+          <img
+            id="logo"
+            style="margin-left: 30px"
+            src="../img/Portal_logo2.png"
+            alt=""
+          />
+          <div class="container contenedor-1">
+            <div style="margin-top: 40px">
+              <a id="inicarss" href="#">Iniciar Sesion</a>
+            </div>
+          </div>
+          <div class="container contenedor-2">
+            <label id="btn-home" for="btn-menu"
+              ><i class="fa-solid fa-house-user"></i> Home</label
+            >
+            <a href="../Htmls/carrito.html"
+              ><i class="fa-solid fa-cart-shopping"></i> Carrito</a
+            >
+            <div onclick="regresarAlandingPage();">
+              <a href="#"
+                ><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a
+              >
+            </div>
+            <a href="../Htmls/estadoOrden.html"
+              ><i class="fa-solid fa-street-view"></i> Estado de tus ordenes</a
+            >
+          </div>
+        </nav>
+      </div>
     </div>
-
 
     <!--CUERPO DEL MENU-->
     <!--Titulos-->
-    <div style="min-height: 100vh;">
-        <div id="titulos">
-            <h5 id="presentacion"></h5>
-            <h2>¿Qué es lo que necesitas?</h2>
-            <div id="titulo-cate" class="rounded-pill">
-                <h3 class="text-center">Categorias</h3>
-            </div>
-    
+    <div style="min-height: 100vh">
+      <div id="titulos">
+        <h5 id="presentacion"></h5>
+        <h2>¿Qué es lo que necesitas?</h2>
+        <div id="titulo-cate" class="rounded-pill">
+          <h3 class="text-center">Categorias</h3>
         </div>
-        <!--CATEGORIAS-->
-        <div class="container">
-            <div id="contenedor-categorias" class="row" style="justify-content: center;">
-    
-            </div>
-        </div> 
+      </div>
+      <!--CATEGORIAS-->
+      <div class="container">
+        <div
+          id="contenedor-categorias"
+          class="row"
+          style="justify-content: center"
+        ></div>
+      </div>
     </div>
-    <footer id="pie-landing" style="background-color: #f4053a;">
-        <div id="content-footer">
-            <i class="fa-brands fa-facebook size-icon"></i>
-            <i class="fa-brands fa-instagram size-icon"></i>
-        </div>
-    </footer>   
-    
+    <footer id="pie-landing" style="background-color: #f4053a">
+      <div id="content-footer">
+        <i class="fa-brands fa-facebook size-icon"></i>
+        <i class="fa-brands fa-instagram size-icon"></i>
+      </div>
+    </footer>
 
     <!--Modal productos-->
-    <div class="modal fade" id="productosModal" tabindex="-1" aria-labelledby="productosModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header header-productos">
-                    <button id="btn-closeproducto" type="button" class="border-0 fa-solid fa-arrow-left-long"
-                        data-bs-toggle="modal" data-bs-target="#productosModal"></button>
-                    <h5 class="modal-title" id="productosModalLabel">Modal title</h5>
-                    <div></div>
-                    <!--modaldetalle-->
-
-
-                </div>
-                <div id="contenedor-productos" class="modal-body p-0">
-
-                </div>
-                <div id="contenedor-orden1">
-                        
-                </div>
-                <div class="modal-footer" style="background-color: #f4053a; height: 67px">
-
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="productosModal"
+      tabindex="-1"
+      aria-labelledby="productosModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header header-productos">
+            <button
+              id="btn-closeproducto"
+              type="button"
+              class="border-0 fa-solid fa-arrow-left-long"
+              data-bs-toggle="modal"
+              data-bs-target="#productosModal"
+            ></button>
+            <h5 class="modal-title" id="productosModalLabel">Modal title</h5>
+            <div></div>
+            <!--modaldetalle-->
+          </div>
+          <div id="contenedor-productos" class="modal-body p-0"></div>
+          <div id="contenedor-orden1"></div>
+          <div
+            class="modal-footer"
+            style="background-color: #f4053a; height: 67px"
+          ></div>
         </div>
+      </div>
     </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/controlador-cliente.js"></script>
-</body>
-
+  </body>
 </html>

@@ -149,41 +149,8 @@
 }
 
 
-#contendor-ubicacion {
-    color: #4c4175;
-    font-weight: bold;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    align-content: stretch;
-    margin-top: 17px;
-}
 
-.latitud-longitud {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: baseline;
-	align-content: stretch;
-}
 
-.latitud-longitud p {
-    margin-right: 30px;
-    font-size: 24px;
-}
-
-#btn-Ubicacion {
-    width: 100%;
-    border-radius: 30px;
-    background-color: #f4053a;
-    height: 45px;
-    color: white;
-    font-weight: 900;
-    font-size: 20px;
-    border-color: skyblue;
-}
 
 #btn-regresarUbi {
     font-size: 35px;
@@ -270,4 +237,23 @@
     position: absolute;
     right: 8px;
     top: 5px;
+}
+
+/*estilos botones metodos de pago*/
+#btn-targeta {
+    background-color:#f4053a;
+    margin-top: 26px;
+    color: white;
+    border: none;
+    height: 50px;
+    border-radius: 10px;
+}
+
+#btn-efectivo {
+    background-color:#4c4175;
+    margin-top: 26px;
+    color: white;
+    border: none;
+    height: 50px;
+    border-radius: 10px;
 }

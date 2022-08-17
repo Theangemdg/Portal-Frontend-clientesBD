@@ -66,7 +66,7 @@ function listaOrdenes() {
                             <h2>TOTAL</h2>
                             <p>$${total.toFixed(2)}</p>
                         </div>
-                        <button id="btn-procesar" type="button" data-bs-toggle="modal" data-bs-target="#modalTargeta">Procesar Orden</button>
+                        <button id="btn-procesar" type="button" data-bs-toggle="modal" data-bs-target="#modaltipopago">Procesar Orden</button>
                     </div>
                     `;
               if (res.data.length !== 0) {
@@ -85,6 +85,7 @@ function listaOrdenes() {
       console.log(err);
     });
 }
+
 
 function eliminarOrden(product) {
   axios({
@@ -208,7 +209,7 @@ function crearOrden() {
           icon: "error",
           title: "Oops...",
           text: "Debes rellenar todos los campos!",
-          confirmButtonColor: "#44bae6",
+          confirmButtonColor: "#4c4175",
         });
       }
     })
@@ -217,6 +218,84 @@ function crearOrden() {
     });
 }
 
+function crearOrdenEfectivo() {
+  let ICV = 0.15;
+  const fechaPago = new Date();
+
+  axios({
+    url: "http://localhost/Backend-portalBD/api/usuarios.php",
+    method: "get",
+    responseType: "json",
+  })
+    .then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].nombre == clienteActivo.nombre) {
+          let numeroPedido = res.data[i].pedidos.length + 1;
+          let subtotal = 0;
+          let pedido = {
+            numeroPedido: numeroPedido,
+            usuario: res.data[i].nombre,
+            correo: res.data[i].correo,
+            fechaPago: fechaPago.toLocaleDateString(),
+            total: "",
+            icv: "",
+            subTotal: "",
+            productos: [],
+          };
+          //for para llenar el pedido con los productos de la orden que se visualizo en el carrito de compras
+          for (let j = 0; j < res.data[i].ordenes.length; j++) {
+            pedido.productos.push({
+              nombreProducto: res.data[i].ordenes[j].nombreProducto,
+              cantidad: res.data[i].ordenes[j].cantidad,
+              precio: res.data[i].ordenes[j].precio,
+            });
+            subtotal += res.data[i].ordenes[j].precio;
+          }
+
+          pedido.icv = ICV * subtotal;
+          pedido.subTotal = subtotal;
+          pedido.total = ICV * subtotal + subtotal;
+
+          console.log(subtotal);
+          console.log(pedido);
+
+          //solicitud para agregar el pedido del usuario
+          axios({
+            url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + i,
+            method: "post",
+            responseType: "json",
+            data: pedido,
+          })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
+          //aqui se hace la solicirud para limpiar las ordenes del carrito cuando se complete la compra
+          axios({
+            url: "http://localhost/Backend-portalBD/api/ordenes.php?id=" + i,
+            method: "delete",
+            responseType: "json",
+          })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
+          sessionStorage.setItem("Usuario activo", JSON.stringify(res.data[i]));
+          break;
+        }
+      }
+      window.location = "../Htmls/menu-cliente.html";
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 //HERRAMIENTAS PARA LA LOCALIZACION
 
 //FIN HERRAMIENTAS DE LOCALIZACION
@@ -262,7 +341,7 @@ document.getElementById("inputNombre").addEventListener("keyup", (e) => {
 document.getElementById("inputCVV").addEventListener("keyup", (e) => {
   document.getElementById("inputCVV").value = document
     .getElementById("inputCVV")
-    .value// Eliminar los espacios
+    .value // Eliminar los espacios
     .replace(/\s/g, "")
     // Eliminar las letras
     .replace(/\D/g, "");

@@ -39,6 +39,46 @@
     <!--Listado de productos-->
     <div id="contedor-ordenes"></div>
 
+    <!-- Modal Tipo de pago-->
+    <div
+      class="modal fade"
+      id="modaltipopago"
+      tabindex="-1"
+      aria-labelledby="modaltipopagoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modaltipopagoLabel">Forma de pago</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body d-flex flex-column" id="tipoPago">
+            <button
+              id="btn-targeta"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#modalTargeta"
+            >
+              Tageta
+            </button>
+            <button
+              id="btn-efectivo"
+              type="button"
+              onclick="crearOrdenEfectivo()"
+            >
+              Efectivo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--MODAL TARGETA_CREDITO-->
     <div
       class="modal fade"

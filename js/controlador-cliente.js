@@ -21,11 +21,10 @@ function generarCategorias() {
     responseType: "json",
   })
     .then((res) => {
-      console.log(res.data);
       document.getElementById("contenedor-categorias").innerHTML = "";
       for (let i = 0; i < res.data.length; i++) {
         document.getElementById("contenedor-categorias").innerHTML += `
-            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="productosCategoria(${res.data[i].id_categoria},${res.data[i].nombreCategoria})"  data-bs-toggle="modal" data-bs-target="#productosModal">
+            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="productosCategoria('${res.data[i].id_categoria}','${res.data[i].nombreCategoria}')"  data-bs-toggle="modal" data-bs-target="#productosModal">
                 <img id="icono-categoria" src="${res.data[i].icono}" class="card-img-top rounded-circle" alt="...">
                 <div class="card-body">
                     <p class="card-text">${res.data[i].nombreCategoria}</p>
@@ -51,7 +50,6 @@ function productosCategoria(codigocategoria, nombreCategoria) {
     responseType: "json",
   })
     .then((res) => {
-      console.log(res);
       document.getElementById("productosModalLabel").innerHTML =
         nombreCategoria;
       for (let i = 0; i < res.data.length; i++) {
@@ -65,7 +63,7 @@ function productosCategoria(codigocategoria, nombreCategoria) {
                                 <h2>${res.data[i].nombre}</h2>
                                 <p>${res.data[i].descripcion}</p>
                                 <p>$${res.data[i].precio}</p>
-                                <button id="btn-pedir" class="rounded-pill" onclick="abrirformularioPedir(${codigocategoria},${res.data[i].id_producto});">Pedir</button>
+                                <button id="btn-pedir" class="rounded-pill" onclick="abrirformularioPedir('${codigocategoria}','${res.data[i].id_producto}');">Pedir</button>
                             </div>
                         </div>
                     </div>
@@ -101,7 +99,7 @@ function abrirformularioPedir(categoria, producto) {
             <div id="contenedor-orden2">
                 <div id="titulo-orden">
                     <h4 style="margin-right: 10px">${Pproduct}</h4>
-                    <p style="margin-left: 10px;">${Pprecio}</p>
+                    <p style="margin-left: 10px;">$${Pprecio}</p>
                 </div>
                 <div class="flex-orden" style="justify-content: center;">
                     <h5>Ingrese la cantidad</h5>

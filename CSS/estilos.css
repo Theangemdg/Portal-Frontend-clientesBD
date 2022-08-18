@@ -332,7 +332,7 @@ header {
     width: 286px;
     background-color: #4c4175;
     color: white;
-    height: 70px;
+    height: 50px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -345,7 +345,7 @@ header {
 
 .cajainfo-R-Texto {
     width: 100%;
-    height: 58px;
+    height: 40px;
     transition: .3s ease all;
     border: 3px solid #ffffff;
 }
@@ -360,6 +360,28 @@ header {
     border: 5px solid #bb2929;
     opacity: 1;
     
+}
+
+.cajainfo-L {
+    width: 286px;
+    background-color: #4c4175;
+    color: white;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    margin-top: 7%;
+
+}
+
+.cajainfo-L-Texto {
+    width: 100%;
+    height: 58px;
+    transition: .3s ease all;
+    border: 3px solid #ffffff;
 }
 
 .input-error {

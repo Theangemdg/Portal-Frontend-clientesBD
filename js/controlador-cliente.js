@@ -25,7 +25,7 @@ function generarCategorias() {
       document.getElementById("contenedor-categorias").innerHTML = "";
       for (let i = 0; i < res.data.length; i++) {
         document.getElementById("contenedor-categorias").innerHTML += `
-            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="productosCategoria(${i})"  data-bs-toggle="modal" data-bs-target="#productosModal">
+            <button type="button" id="Carta-categoria" class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" onclick="productosCategoria(${res.data[i].id_categoria},${res.data[i].nombreCategoria})"  data-bs-toggle="modal" data-bs-target="#productosModal">
                 <img id="icono-categoria" src="${res.data[i].icono}" class="card-img-top rounded-circle" alt="...">
                 <div class="card-body">
                     <p class="card-text">${res.data[i].nombreCategoria}</p>
@@ -40,32 +40,32 @@ function generarCategorias() {
 }
 generarCategorias();
 
-function productosCategoria(codigocategoria) {
+function productosCategoria(codigocategoria, nombreCategoria) {
   document.getElementById("contenedor-productos").innerHTML = "";
   document.getElementById("productosModalLabel").innerHTML = "PORTAL";
   axios({
     url:
-      "http://localhost/Backend-portalBD/api/categorias.php?id=" +
+      "http://localhost/Backend-portalBD/api/productos.php?id=" +
       codigocategoria,
     method: "get",
     responseType: "json",
   })
     .then((res) => {
-      document.getElementById(
-        "productosModalLabel"
-      ).innerHTML = `${res.data.nombreCategoria}`;
-      for (let i = 0; i < res.data.productos.length; i++) {
+      console.log(res);
+      document.getElementById("productosModalLabel").innerHTML =
+        nombreCategoria;
+      for (let i = 0; i < res.data.length; i++) {
         document.getElementById("contenedor-productos").innerHTML += `
                 <div id="producto">
                     <div id="btn-productos">
-                        <img id="banner-producto" src="${res.data.productos[i].imgProducto}"alt="...">
+                        <img id="banner-producto" src="${res.data[i].imagen}"alt="...">
                         <div id="body-producto" class="card-body">
-                            <img id="logo-producto" src="${res.data.productos[i].imgProducto}" class="rounded-circle " alt="...">
+                            <img id="logo-producto" src="${res.data[i].imagen}" class="rounded-circle " alt="...">
                             <div>
-                                <h2>${res.data.productos[i].nombreProducto}</h2>
-                                <p>${res.data.productos[i].descripcion}</p>
-                                <p>$${res.data.productos[i].precio}</p>
-                                <button id="btn-pedir" class="rounded-pill" onclick="abrirformularioPedir(${codigocategoria},${i});">Pedir</button>
+                                <h2>${res.data[i].nombre}</h2>
+                                <p>${res.data[i].descripcion}</p>
+                                <p>$${res.data[i].precio}</p>
+                                <button id="btn-pedir" class="rounded-pill" onclick="abrirformularioPedir(${codigocategoria},${res.data[i].id_producto});">Pedir</button>
                             </div>
                         </div>
                     </div>
@@ -94,10 +94,8 @@ function abrirformularioPedir(categoria, producto) {
     responseType: "json",
   })
     .then((res) => {
-      let Pproduct = res.data.nombreProducto;
-      let Pdescripcion = res.data.descripcion;
+      let Pproduct = res.data.nombre;
       let Pprecio = res.data.precio;
-      let imagen = res.data.imgProducto;
 
       document.getElementById("contenedor-orden1").innerHTML = `
             <div id="contenedor-orden2">
@@ -111,7 +109,7 @@ function abrirformularioPedir(categoria, producto) {
                 </div>
                 <div class="flex-orden">
                     <button id="btn-cerrarOrden" class="rounded-pill" type="button" onclick="cerrarFormulario()">Cancelar</button>
-                    <button id="btn-procesarOrden" class="rounded-pill" type="button" onclick="procesarOrden('${Pproduct}','${Pdescripcion}','${Pprecio}','${imagen}')">Procesar orden</button>
+                    <button id="btn-procesarOrden" class="rounded-pill" type="button" onclick="procesarOrden('${producto}')">Procesar orden</button>
                 </div>
             </div>
             `;
@@ -128,64 +126,43 @@ function cerrarFormulario() {
   document.getElementById("input-orden").value = "";
 }
 
-function procesarOrden(nombrePro, descriProd, Precio, imagenP) {
+function procesarOrden(id_prod) {
   let cantidad = document.getElementById("input-orden").value;
   console.log(cantidad);
-
-  axios({
-    url: "http://localhost/Backend-portalBD/api/usuarios.php",
-    method: "get",
-    responseType: "json",
-  })
-    .then((res) => {
-      console.log(res);
-      for (let i = 0; i < res.data.length; i++) {
-        if (cantidad == "") {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Introduce la cantidad antes de prcesar la orden",
-            confirmButtonColor: "#4c4175",
-          });
-          break;
-        } else {
-          if (res.data[i].nombre == clienteActivo.nombre) {
-            let orden = {
-              nombreProducto: nombrePro,
-              imgProducto: imagenP,
-              cantidad: parseInt(cantidad),
-              descripcion: descriProd,
-              precio: Precio * cantidad,
-            };
-
-            axios({
-              method: "POST",
-              url: "http://localhost/Backend-portalBD/api/ordenes.php?id=" + i,
-              responseType: "json",
-              data: orden,
-            })
-              .then((res) => {
-                console.log(res.data);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-            Swal.fire({
-              icon: "success",
-              title: "Producto agregado correctamente",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            sessionStorage.setItem(
-              "Usuario activo",
-              JSON.stringify(res.data[i])
-            );
-            cerrarFormulario();
-          }
-        }
-      }
-    })
-    .catch((err) => {
-      console.log(err);
+  
+  if (cantidad == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Introduce la cantidad antes de prcesar la orden",
+      confirmButtonColor: "#4c4175",
     });
+  } else {
+    let producto = {
+      id_usuario: clienteActivo.id_usuario,
+      id_producto: id_prod,
+      cantidad: parseInt(cantidad),
+    };
+
+    axios({
+      method: "POST",
+      url:
+        "http://localhost/Backend-portalBD/api/carrito.php",
+      responseType: "json",
+      data: producto,
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    cerrarFormulario();
+  }
 }

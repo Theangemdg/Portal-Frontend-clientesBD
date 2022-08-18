@@ -1,17 +1,23 @@
 //FUNCIONES PARA EVALUAR LOS FORMULARIOS
 const formulario = document.getElementById("modalBodyR");
 const inputs = document.querySelectorAll("#modalBodyR input");
+var numeroUsers = "";
 
 const expresiones = {
   usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
   nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+  apellido: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
   password: /^.{4,12}$/, // 4 a 12 digitos.
   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
   telefono: /^\d{7,14}$/, // 7 a 14 numeros.
+  edad: /^\d{1,3}$/, // 1 a 3 numeros.
 };
 
 function limpiarInputs() {
   document.getElementById("txt-nombre").value = "";
+  document.getElementById("txt-apellido").value = "";
+  document.getElementById("txt-edad").value = "";
+  document.getElementById("txt-telefono").value = "";
   document.getElementById("txt-correo").value = "";
   document.getElementById("txt-contraseña").value = "";
   document.getElementById("txt-correoI").value = "";
@@ -30,6 +36,15 @@ const validarFormulario = (e) => {
     case "contraseña":
       validarCampo(expresiones.password, e.target, "contraseña");
       break;
+    case "apellido":
+      validarCampo(expresiones.apellido, e.target, "apellido");
+      break;
+    case "edad":
+      validarCampo(expresiones.edad, e.target, "edad");
+      break;
+    case "telefono":
+      validarCampo(expresiones.telefono, e.target, "telefono");
+      break;
   }
 };
 
@@ -44,6 +59,12 @@ const validarCampo = (expresion, input, campo) => {
     document
       .querySelector(`#grupo-${campo} .input-error`)
       .classList.remove("input-error-activo");
+    document
+      .querySelector(`#grupo-${campo} .input-error`)
+      .classList.remove("input-error-activo");
+    document
+      .querySelector(`#grupo-${campo} .input-error`)
+      .classList.remove("input-error-activo");
   } else {
     document
       .getElementById(`txt-${campo}`)
@@ -54,8 +75,30 @@ const validarCampo = (expresion, input, campo) => {
     document
       .querySelector(`#grupo-${campo} .input-error`)
       .classList.add("input-error-activo");
+    document
+      .querySelector(`#grupo-${campo} .input-error`)
+      .classList.add("input-error-activo");
+    document
+      .querySelector(`#grupo-${campo} .input-error`)
+      .classList.add("input-error-activo");
+    document
+      .querySelector(`#grupo-${campo} .input-error`)
+      .classList.add("input-error-activo");
   }
 };
+
+axios({
+  method: "GET",
+  url: "http://localhost/Backend-portalBD/api/usuarios.php?numeroUser="+0,
+  responseType: "json",
+})
+  .then((res) => {
+    numeroUsers = res.data.usuarios;
+    console.log(parseInt(numeroUsers));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 inputs.forEach((input) => {
   input.addEventListener("keyup", validarFormulario);
@@ -67,30 +110,27 @@ inputs.forEach((input) => {
 function agregarUsuario() {
   let txtNombre = document.getElementById("txt-nombre").value;
   let txtCorreo = document.getElementById("txt-correo").value;
+  let txtApellido = document.getElementById("txt-apellido").value;
+  let txtEdad = document.getElementById("txt-edad").value;
+  let txtTelefono = document.getElementById("txt-telefono").value;
   let txtContraseña = document.getElementById("txt-contraseña").value;
 
-  var campos = {
-    nombre: false,
-    correo: false,
-    contraseña: false,
-  };
-
-  if (txtNombre && txtCorreo && txtContraseña !== " ") {
-    campos.nombre = true;
-    campos.correo = true;
-    campos.contraseña = true;
-    console.log(campos);
-  }
-
-  if (campos.nombre && campos.correo && campos.contraseña === true) {
+  if (
+    txtNombre &&
+    txtCorreo &&
+    txtContraseña &&
+    txtApellido &&
+    txtEdad &&
+    txtTelefono
+  ) {
     let usuario = {
+      id_usuario: parseInt(numeroUsers)+1,
       nombre: txtNombre,
+      apellido: txtApellido,
+      edad: txtEdad,
+      telefono: txtTelefono,
       correo: txtCorreo,
       contraseña: txtContraseña,
-      direccion: "no definido",
-      ordenes: [],
-      pedidos: [],
-      metodoPago: [],
     };
 
     axios({
@@ -125,6 +165,9 @@ function ingresar() {
   ucorreo = document.getElementById("txt-correoI").value;
   contraseña = document.getElementById("txt-contraS").value;
 
+  console.log(ucorreo);
+  console.log(contraseña);
+
   axios({
     url: "http://localhost/Backend-portalBD/api/usuarios.php",
     method: "get",
@@ -135,14 +178,14 @@ function ingresar() {
       for (let i = 0; i < res.data.length; i++) {
         if (
           res.data[i].correo == ucorreo &&
-          res.data[i].contrasena == contraseña
+          res.data[i].contraseña == contraseña
         ) {
           bAcceso = true;
           sessionStorage.setItem("Usuario activo", JSON.stringify(res.data[i]));
           break;
         }
       }
-      if (bAcceso == true) {
+      if (bAcceso) {
         window.location = "../Htmls/menu-cliente.html";
       } else {
         Swal.fire({
@@ -167,6 +210,8 @@ function iniciarUsuarioRegistrado() {
 
   ucorreo = document.getElementById("txt-correo").value;
   contraseña = document.getElementById("txt-contraseña").value;
+  console.log(ucorreo);
+  console.log(contraseña);
 
   axios({
     url: "http://localhost/Backend-portalBD/api/usuarios.php",
@@ -178,7 +223,7 @@ function iniciarUsuarioRegistrado() {
       for (let i = 0; i < res.data.length; i++) {
         if (
           res.data[i].correo == ucorreo &&
-          res.data[i].contrasena == contraseña
+          res.data[i].contraseña == contraseña
         ) {
           bAcceso = true;
           sessionStorage.setItem("Usuario activo", JSON.stringify(res.data[i]));

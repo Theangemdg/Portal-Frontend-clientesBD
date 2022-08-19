@@ -1,128 +1,104 @@
 var clienteActivo = JSON.parse(sessionStorage.getItem("Usuario activo"));
 console.log(clienteActivo);
-
+var tipoEntrega;
 listaOrdenes();
+
+function entregaDomicilio() {
+  tipoEntrega = 1;
+}
+
+function entregaRestaurante() {
+  tipoEntrega = 2;
+}
 
 function listaOrdenes() {
   document.getElementById("contedor-ordenes").innerHTML = "";
-  console.log(clienteActivo.ordenes.length);
 
   let subtotal = 0;
   let ISV = 0.15;
 
   axios({
-    url: "http://localhost/Backend-portalBD/api/usuarios.php",
     method: "get",
+    url:
+      "http://localhost/Backend-portalBD/api/carrito.php?id=" +
+      clienteActivo.id_usuario,
     responseType: "json",
   })
     .then((res) => {
+      console.log(res.data);
+
       for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].nombre == clienteActivo.nombre) {
-          axios({
-            method: "get",
-            url: "http://localhost/Backend-portalBD/api/ordenes.php?id=" + i,
-            responseType: "json",
-          })
-            .then((res) => {
-              console.log(res.data);
-
-              for (let i = 0; i < res.data.length; i++) {
-                document.getElementById("contedor-ordenes").innerHTML += `
-                        <div id="contenido-producto" class="shadow-lg p-3 mb-3 bg-body">
-                            <img id="icono-producto" class="rounded-circle" src="${
-                              res.data[i].imgProducto
-                            }" alt="">
-                            <div >
-                                <h2>${res.data[i].nombreProducto}</h2>
-                                <h5>${res.data[i].descripcion}</h5>
-                                <div class="flex-center">
-                                    <h2>cantidad</h2>
-                                    <h2>${res.data[i].cantidad}</h2>
-                                </div>
-                            </div>
-                            <div>
-                                <p>$${res.data[i].precio.toFixed(2)}</p>
-                                <button class="fa-regular fa-trash-can" onclick="eliminarOrden('${i}')"></button>
-                            </div>
+        document.getElementById("contedor-ordenes").innerHTML += `
+                <div id="contenido-producto" class="shadow-lg p-3 mb-3 bg-body">
+                    <img id="icono-producto" class="rounded-circle" src="${res.data[i].imagen}" alt="">
+                    <div >
+                        <h2>${res.data[i].nombre}</h2>
+                        <h5>${res.data[i].descripcion}</h5>
+                        <div class="flex-center">
+                            <h2>cantidad</h2>
+                            <h2>${res.data[i].cantidad}</h2>
                         </div>
-                        `;
-                subtotal += res.data[i].precio;
-              }
-
-              let total = ISV * subtotal + subtotal;
-              //AQUI PONER EL IF PARA VER SI ES POR ENVIO A DOMICILIO O PARA COMER EN EL RESTAURANTE
-
-              document.getElementById("contedor-ordenes").innerHTML += `
-                    <div id="contenedor-detalleCompra">
-                        <div class="compra">
-                            <h2>Sub Total</h2>
-                            <p>$${subtotal.toFixed(2)}</p>
-                        </div>
-                        <div class="compra">
-                            <h2>ISV</h2>
-                            <p>$${(ISV * subtotal).toFixed(2)}</p>
-                        </div>
-                        <div class="compra">
-                            <h2>TOTAL</h2>
-                            <p>$${total.toFixed(2)}</p>
-                        </div>
-                        <button id="btn-procesar" type="button" data-bs-toggle="modal" data-bs-target="#modaltipopago">Procesar Orden</button>
                     </div>
-                    `;
-              if (res.data.length !== 0) {
-                document
-                  .getElementById("btn-procesar")
-                  .classList.add("aparece-btnProcesar");
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+                    <div>
+                        <p>$${res.data[i].precio}</p>
+                        <button class="fa-regular fa-trash-can" onclick="eliminarOrden('${res.data[i].id_producto}')"></button>
+                    </div>
+                </div>
+                `;
+        subtotal += parseFloat(res.data[i].precio);
+      }
+
+      let total = ISV * subtotal + subtotal;
+      //AQUI PONER EL IF PARA VER SI ES POR ENVIO A DOMICILIO O PARA COMER EN EL RESTAURANTE
+
+      document.getElementById("contedor-ordenes").innerHTML += `
+            <div id="contenedor-detalleCompra">
+                <div class="compra">
+                    <h2>Sub Total</h2>
+                    <p>$${subtotal}</p>
+                </div>
+                <div class="compra">
+                    <h2>ISV</h2>
+                    <p>$${ISV * subtotal}</p>
+                </div>
+                <div class="compra">
+                    <h2>TOTAL</h2>
+                    <p>$${total}</p>
+                </div>
+                <button id="btn-procesar" type="button" data-bs-toggle="modal" data-bs-target="#modaltipopago">Procesar Orden</button>
+            </div>
+            `;
+      if (res.data.length !== 0) {
+        document
+          .getElementById("btn-procesar")
+          .classList.add("aparece-btnProcesar");
       }
     })
     .catch((err) => {
       console.log(err);
     });
 }
-
 
 function eliminarOrden(product) {
   axios({
-    url: "http://localhost/Backend-portalBD/api/usuarios.php",
-    method: "get",
+    url:
+      "http://localhost/Backend-portalBD/api/carrito.php?id=" +
+      clienteActivo.id_usuario +
+      "&idO=" +
+      product,
+    method: "delete",
     responseType: "json",
   })
     .then((res) => {
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].nombre == clienteActivo.nombre) {
-          axios({
-            url:
-              "http://localhost/Backend-portalBD/api/ordenes.php?id=" +
-              i +
-              "&idO=" +
-              product,
-            method: "delete",
-            responseType: "json",
-          })
-            .then((res) => {})
-            .catch((err) => {
-              console.log(err);
-            });
-          listaOrdenes();
-          sessionStorage.setItem("Usuario activo", JSON.stringify(res.data[i]));
-          break;
-        }
-      }
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
     });
+  listaOrdenes();
 }
 
 function crearOrden() {
-  let ICV = 0.15;
-  const fechaPago = new Date();
   let txtnombreTargeta = document.getElementById("inputNombre").value;
   let txtnumerTargeta = document.getElementById("inputNumero").value;
   let txtfechaExpiracion =
@@ -131,166 +107,159 @@ function crearOrden() {
     document.getElementById("select-year").value;
   let txtcvv = document.getElementById("inputCVV").value;
 
-  axios({
-    url: "http://localhost/Backend-portalBD/api/usuarios.php",
-    method: "get",
-    responseType: "json",
-  })
-    .then((res) => {
-      if (txtnombreTargeta && txtnumerTargeta && txtfechaExpiracion && txtcvv) {
-        for (let i = 0; i < res.data.length; i++) {
-          if (res.data[i].nombre == clienteActivo.nombre) {
-            let numeroPedido = res.data[i].pedidos.length + 1;
-            let subtotal = 0;
-            let pedido = {
-              numeroPedido: numeroPedido,
-              usuario: res.data[i].nombre,
-              correo: res.data[i].correo,
-              fechaPago: fechaPago.toLocaleDateString(),
-              total: "",
-              icv: "",
-              subTotal: "",
-              productos: [],
-            };
-            //for para llenar el pedido con los productos de la orden que se visualizo en el carrito de compras
-            for (let j = 0; j < res.data[i].ordenes.length; j++) {
-              pedido.productos.push({
-                nombreProducto: res.data[i].ordenes[j].nombreProducto,
-                cantidad: res.data[i].ordenes[j].cantidad,
-                precio: res.data[i].ordenes[j].precio,
+  const hora = Date.now();
+  let fecha = new Date(hora);
+  
+  let orden = {
+    id_usuario: clienteActivo.id_usuario,
+    id_empleado: parseInt((Math.random()*(8-1)+1)),
+    id_tipoEntrega: 1,
+    id_tipoPago: 1,
+    id_estado: 1,
+    fecha_orden: fecha,
+  };
+
+  if (txtnombreTargeta && txtfechaExpiracion && txtcvv && txtnumerTargeta) {
+    axios({
+      url: "http://localhost/Backend-portalBD/api/ordenes.php",
+      method: "post",
+      responseType: "json",
+      data: orden
+    })
+      .then((res) => {
+        console.log(res.data);
+        let ordenAprovado = parseInt(res.data.last_id_value);
+
+        axios({
+          url:
+            "http://localhost/Backend-portalBD/api/carrito.php?id=" +
+            clienteActivo.id_usuario,
+          method: "get",
+          responseType: "json",
+        })
+          .then((res) => {
+            let productosOd = [];
+            for (let i = 0; i < res.data.length; i++) {
+              productosOd.push({
+                id_orden: ordenAprovado,
+                id_producto: res.data[i].id_producto,
+                cantidad: res.data[i].cantidad,
               });
-              subtotal += res.data[i].ordenes[j].precio;
             }
 
-            pedido.icv = ICV * subtotal;
-            pedido.subTotal = subtotal;
-            pedido.total = ICV * subtotal + subtotal;
+            let ordenDetallada = {
+              productos: productosOd,
+            };
 
-            console.log(subtotal);
-            console.log(pedido);
-
-            //solicitud para agregar el pedido del usuario
             axios({
-              url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + i,
+              url: "http://localhost/Backend-portalBD/api/ordenDetallada.php",
               method: "post",
               responseType: "json",
-              data: pedido,
+              data: ordenDetallada,
             })
               .then((res) => {
                 console.log(res);
+                vaciarCarrito();
               })
               .catch((err) => {
                 console.log(err);
               });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "debes rellenar todos los campos",
+      confirmButtonColor: "#4c4175",
+    });
+  }
+}
 
-            //aqui se hace la solicirud para limpiar las ordenes del carrito cuando se complete la compra
-            axios({
-              url: "http://localhost/Backend-portalBD/api/ordenes.php?id=" + i,
-              method: "delete",
-              responseType: "json",
-            })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+function crearOrdenEfectivo() {
+  let hora = Date.now();
+  let fecha = new Date(hora);
 
-            sessionStorage.setItem(
-              "Usuario activo",
-              JSON.stringify(res.data[i])
-            );
-            break;
+  let orden = {
+    id_usuario: clienteActivo.id_usuario,
+    id_empleado: parseInt((Math.random()*(8-1)+1)),
+    id_tipoEntrega: 1,
+    id_tipoPago: 1,
+    id_estado: 1,
+    fecha_orden: fecha,
+  };
+
+  axios({
+    url: "http://localhost/Backend-portalBD/api/ordenes.php",
+    method: "post",
+    responseType: "json",
+    data: orden,
+  })
+    .then((res) => {
+      console.log(parseInt(res.data.last_id_value));
+      let ordenAprovado = parseInt(res.data.last_id_value);
+
+      axios({
+        url:
+          "http://localhost/Backend-portalBD/api/carrito.php?id=" +
+          clienteActivo.id_usuario,
+        method: "get",
+        responseType: "json",
+      })
+        .then((res) => {
+          let productosOd = [];
+          for (let i = 0; i < res.data.length; i++) {
+            productosOd.push({
+              id_orden: ordenAprovado,
+              id_producto: res.data[i].id_producto,
+              cantidad: res.data[i].cantidad,
+            });
           }
-        }
-        window.location = "../Htmls/menu-cliente.html";
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Debes rellenar todos los campos!",
-          confirmButtonColor: "#4c4175",
+
+          let ordenDetallada = {
+            productos: productosOd,
+          };
+
+          axios({
+            url: "http://localhost/Backend-portalBD/api/ordenDetallada.php",
+            method: "post",
+            responseType: "json",
+            data: ordenDetallada,
+          })
+            .then((res) => {
+              console.log(res);
+              vaciarCarrito();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      }
+     
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-function crearOrdenEfectivo() {
-  let ICV = 0.15;
-  const fechaPago = new Date();
 
+function vaciarCarrito(){
   axios({
-    url: "http://localhost/Backend-portalBD/api/usuarios.php",
-    method: "get",
+    url: "http://localhost/Backend-portalBD/api/carrito.php?id="+clienteActivo.id_usuario,
+    method: "Delete",
     responseType: "json",
   })
     .then((res) => {
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].nombre == clienteActivo.nombre) {
-          let numeroPedido = res.data[i].pedidos.length + 1;
-          let subtotal = 0;
-          let pedido = {
-            numeroPedido: numeroPedido,
-            usuario: res.data[i].nombre,
-            correo: res.data[i].correo,
-            fechaPago: fechaPago.toLocaleDateString(),
-            total: "",
-            icv: "",
-            subTotal: "",
-            productos: [],
-          };
-          //for para llenar el pedido con los productos de la orden que se visualizo en el carrito de compras
-          for (let j = 0; j < res.data[i].ordenes.length; j++) {
-            pedido.productos.push({
-              nombreProducto: res.data[i].ordenes[j].nombreProducto,
-              cantidad: res.data[i].ordenes[j].cantidad,
-              precio: res.data[i].ordenes[j].precio,
-            });
-            subtotal += res.data[i].ordenes[j].precio;
-          }
-
-          pedido.icv = ICV * subtotal;
-          pedido.subTotal = subtotal;
-          pedido.total = ICV * subtotal + subtotal;
-
-          console.log(subtotal);
-          console.log(pedido);
-
-          //solicitud para agregar el pedido del usuario
-          axios({
-            url: "http://localhost/Backend-portalBD/api/pedidos.php?id=" + i,
-            method: "post",
-            responseType: "json",
-            data: pedido,
-          })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-
-          //aqui se hace la solicirud para limpiar las ordenes del carrito cuando se complete la compra
-          axios({
-            url: "http://localhost/Backend-portalBD/api/ordenes.php?id=" + i,
-            method: "delete",
-            responseType: "json",
-          })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-
-          sessionStorage.setItem("Usuario activo", JSON.stringify(res.data[i]));
-          break;
-        }
-      }
-      window.location = "../Htmls/menu-cliente.html";
+      console.log(res);
+      window.location = "../htmls/menu-cliente.html";
     })
     .catch((err) => {
       console.log(err);
